@@ -11,7 +11,6 @@ public class BackgroundPlacer : MonoBehaviour
     [SerializeField] private float scaleWidth, scaleHeight, distance;
 
     [ContextMenu("CreateBackground")]
-    // Start is called before the first frame update
     private void CreateBackground()
     {
         foreach (var forest in forests)
@@ -37,6 +36,7 @@ public class BackgroundPlacer : MonoBehaviour
             {
                 prefabIndex = 0;
             }
+            
         }
 
     }
@@ -54,8 +54,14 @@ public class BackgroundPlacer : MonoBehaviour
     }
 
 
+    private void OnValidate()
+    {
+        if (forests.Count == 8)
+        {
+            SetForestScale();
 
-
-
+        }
+        
+    }
 
 }
