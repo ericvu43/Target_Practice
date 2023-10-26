@@ -9,8 +9,14 @@ public class ArrowShoot : MonoBehaviour
     float range = 1000f;
     public Transform ArrowSpawnPosition;
 
+    public GameObject HandArrow;
+
     void shoot()
     {
+
+        HandArrow.gameObject.SetActive(false);
+
+
         Vector2 ScreenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
         Ray ray = Camera.main.ScreenPointToRay(ScreenCenter);
         if (Physics.Raycast(ray, out hit, range))

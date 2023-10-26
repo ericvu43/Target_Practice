@@ -5,21 +5,29 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     Animator animator;
+    [Header("Arrow")]
+    public GameObject HandArrow;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        HandArrow.gameObject.SetActive(false);
+    }
+
+    void HandArrowActive()
+    {
+        HandArrow.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetButton("Fire1"))
         {
             animator.SetBool("aim", true);
             
         }
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetButtonUp("Fire1"))
         {
             animator.SetBool("aim", false);
             animator.SetBool("shoot", true);
