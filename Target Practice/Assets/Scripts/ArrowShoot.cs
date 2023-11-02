@@ -1,28 +1,77 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ArrowShoot : MonoBehaviour
 {
-    public GameObject ArrowPrefab;
-    RaycastHit hit;
-    float range = 1000f;
-    public Transform ArrowSpawnPosition;
+    public GameObject arrowPrefab;
+    public Transform arrowSpawnPoint;
+    public float arrowForce = 10f;
+    public float timeBetweenShots = 3f; // Adjust this value as needed.
+    private bool isAiming = false;
+    private Vector3 aimDirection;
+    private Camera mainCamera;
+    private bool canShoot = true;
+    private bool isArrowActive = false; // Flag to track if an arrow is in flight.
+    private float lastShotTime;
 
     public GameObject HandArrow;
 
-    void shoot()
+    private void Start()
     {
-
+        mainCamera = Camera.main;
         HandArrow.gameObject.SetActive(false);
+    }
 
-
-        Vector2 ScreenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
-        Ray ray = Camera.main.ScreenPointToRay(ScreenCenter);
-        if (Physics.Raycast(ray, out hit, range))
+    private void Update()
+    {
+        if (Input.GetButton("Fire1") && Time.time - lastShotTime >= timeBetweenShots && canShoot)
         {
-            GameObject ArrowInstantiate = GameObject.Instantiate(ArrowPrefab, ArrowSpawnPosition.transform.position, ArrowSpawnPosition.transform.rotation) as GameObject;
-            ArrowInstantiate.GetComponent<Arrow>().setTarget(hit.point);
+            isAiming = true;
+            HandArrow.gameObject.SetActive(true);
+        }
+
+        if (isAiming)
+        {
+            // Continuously update the aim direction while the right mouse button is held down.
+            aimDirection = (arrowSpawnPoint.position - transform.position).normalized;
+
+            // You can also visualize the aim direction with a line renderer or other methods.
+        }
+
+        if (Input.GetButtonUp("Fire1") && isAiming && canShoot)
+        {
+            ShootArrow();
+            isAiming = false;
+            HandArrow.gameObject.SetActive(false);
+            lastShotTime = Time.time;
         }
     }
+
+    private void ShootArrow()
+    {
+        Ray ray = mainCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            Vector3 arrowDirection = (hit.point - transform.position).normalized;
+            GameObject newArrow = Instantiate(arrowPrefab, transform.position, Quaternion.LookRotation(arrowDirection));
+            Rigidbody arrowRigidbody = newArrow.GetComponent<Rigidbody>();
+            arrowRigidbody.velocity = arrowDirection * arrowForce;
+            canShoot = false;
+        }
+    }
+
+
+    private IEnumerator EnableShootingAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        canShoot = true;
+    }
 }
+
+
+
+
+
+

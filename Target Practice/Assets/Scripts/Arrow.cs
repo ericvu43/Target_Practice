@@ -1,23 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    public Vector3 m_target;
-    public float speed;
+    // Create a delegate and event for arrow destruction.
+    public delegate void ArrowDestroyedHandler();
+    public event ArrowDestroyedHandler OnArrowDestroyed;
 
-    private void Update()
+    private Rigidbody rb;
+    private bool hasHit = false;
+
+    private void Start()
     {
-        float step = speed * Time.deltaTime;
-        if (m_target != null)
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!hasHit)
         {
-            transform.position = Vector3.MoveTowards(transform.position, m_target, step);
+            if (!collision.collider.isTrigger)
+            {
+                // The arrow has hit a non-trigger object, you can handle this event as needed.
+                Debug.Log("Arrow hit a non-trigger object!");
+            }
+            hasHit = true;
+            rb.isKinematic = true; // Stop the arrow's movement
+            Destroy(gameObject, 2f); // Destroy the arrow after 2 seconds, change this value as needed.
+
+            // Invoke the arrow destruction event.
+            OnArrowDestroyed?.Invoke();
         }
     }
-
-    public void setTarget(Vector3 target)
-    {
-        m_target = target;
-    }
 }
+
+
+
+
+
+
