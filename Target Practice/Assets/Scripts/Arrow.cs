@@ -18,7 +18,7 @@ public class Arrow : MonoBehaviour
     {
         if (!hasHit)
         {
-            if (!collision.collider.isTrigger)
+            if (collision.collider.isTrigger)
             {
                 // The arrow has hit a non-trigger object, you can handle this event as needed.
                 Debug.Log("Arrow hit a non-trigger object!");

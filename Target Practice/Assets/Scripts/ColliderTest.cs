@@ -11,9 +11,8 @@ public class TriggerExample : MonoBehaviour
             // Replace "Player" with the tag of the object you want to detect collisions with.
 
             // Do something when the trigger is entered, for example, print a message.
-            print("Trigger entered by Arrow");
+            print("Trigger entered by Arrow bullseye");
         }
-        print("In Method");
     }
 }
 

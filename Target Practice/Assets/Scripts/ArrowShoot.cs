@@ -40,14 +40,14 @@ public class ArrowShoot : MonoBehaviour
 
         if (Input.GetButtonUp("Fire1") && isAiming && canShoot)
         {
-            ShootArrow();
+            shoot();
             isAiming = false;
             HandArrow.gameObject.SetActive(false);
             lastShotTime = Time.time;
         }
     }
 
-    private void ShootArrow()
+    private void shoot()
     {
         Ray ray = mainCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
         RaycastHit hit;
