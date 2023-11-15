@@ -16,19 +16,15 @@ public class Arrow : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!hasHit)
-        {
-            if (collision.collider.isTrigger)
-            {
-                // The arrow has hit a non-trigger object, you can handle this event as needed.
-                Debug.Log("Arrow hit a non-trigger object!");
-            }
+        if (!hasHit) {
+
             hasHit = true;
             rb.isKinematic = true; // Stop the arrow's movement
             Destroy(gameObject, 2f); // Destroy the arrow after 2 seconds, change this value as needed.
 
             // Invoke the arrow destruction event.
             OnArrowDestroyed?.Invoke();
+
         }
     }
 }

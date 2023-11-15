@@ -1,14 +1,19 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class PointSystem : MonoBehaviour
 {
-    public Text pointsText;
+    public TextMeshProUGUI pointsText; // Reference to your TextMeshProUGUI component
     private int points = 0;
 
-    public void AddPoints(int amount)
+    private void Start()
     {
-        points += amount;
+        UpdatePointsText();
+    }
+
+    public void AddPoints(int pointValue)
+    {
+        points += pointValue;
         UpdatePointsText();
     }
 
@@ -20,5 +25,6 @@ public class PointSystem : MonoBehaviour
         }
     }
 }
+
 
 

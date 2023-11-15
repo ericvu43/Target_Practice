@@ -11,12 +11,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        HandArrow.gameObject.SetActive(false);
-    }
-
-    void HandArrowActive()
-    {
-        HandArrow.gameObject.SetActive(true);
+        
     }
 
     // Update is called once per frame
@@ -25,16 +20,22 @@ public class Movement : MonoBehaviour
         if (Input.GetButton("Fire1"))
         {
             animator.SetBool("aim", true);
+            HandArrowActive();
             
         }
         if (Input.GetButtonUp("Fire1"))
         {
             animator.SetBool("aim", false);
             animator.SetBool("shoot", true);
+            HandArrow.SetActive(false);
         }
         else
         {
             animator.SetBool("shoot", false);
         }
+    }
+    public void HandArrowActive()
+    {
+        HandArrow.SetActive(true);
     }
 }
