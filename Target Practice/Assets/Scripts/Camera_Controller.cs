@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/* Code for gamecamera third person */
 public class CameraController : MonoBehaviour
 {
     public float sensitivity = 50f;

@@ -3,7 +3,7 @@ using TMPro;
 
 public class PointSystem : MonoBehaviour
 {
-    public TextMeshProUGUI pointsText; // Reference to your TextMeshProUGUI component
+    public TextMeshProUGUI pointsText;
     private int points = 0;
 
     private void Start()

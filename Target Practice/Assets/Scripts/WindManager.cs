@@ -2,6 +2,8 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// I got help from a friend that showed me how windzone works and code to make wind work to the gameobject
+// arrow prefab
 public class WindManager : MonoBehaviour
 {
     public float minWindSpeed = 5f; // Minimum wind speed
@@ -47,7 +49,6 @@ public class WindManager : MonoBehaviour
         GetComponent<WindZone>().transform.forward = windDirection;
     }
 
-    // You can add more methods or logic here as needed.
 }
 
 

@@ -6,6 +6,9 @@ public class StartMenuController : MonoBehaviour{
      * the game scene because the game scene would lock your mouse to the center of the screen and the 
      * buttons in the main menu dont work, so I just decided that the main menu would just show up when
      * you first launch the game.
+     * 
+     * https://www.youtube.com/watch?v=zc8ac_qUXQY&ab_channel=Brackeys
+     * this yt video helped me with the main menu creation
      */
     public void PlayGame()
     {
@@ -15,9 +18,8 @@ public class StartMenuController : MonoBehaviour{
     {
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();
         #endif
+        Application.Quit();
     }
 
 }

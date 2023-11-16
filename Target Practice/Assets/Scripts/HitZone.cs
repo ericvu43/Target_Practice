@@ -4,7 +4,7 @@ using UnityEngine;
 public class HitZone : MonoBehaviour
 {
     public int pointValue = 10;
-    private PointSystem pointSystem; // Reference to the PointSystem script.
+    private PointSystem pointSystem; 
     private bool canAddPoints = true;
     public float cooldownTime = 2f; // Set the cooldown time in seconds.
 

@@ -3,6 +3,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+/* https://www.youtube.com/watch?v=4zYIxu_CDIY&ab_channel=SahaniStudio
+ This video game me a good bases point on where and how to start my arrow shooting mechanic 
+*/
+
 public class ArrowShoot : MonoBehaviour
 {
     public GameObject arrowPrefab;
