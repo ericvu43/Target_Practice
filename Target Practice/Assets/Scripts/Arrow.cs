@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Arrow : MonoBehaviour
@@ -9,17 +10,21 @@ public class Arrow : MonoBehaviour
     private Rigidbody rb;
     private bool hasHit = false;
 
+    public AudioSource arrowHit;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
+        //arrowHit.Play(); Tried to get audio to work but there was an audio problem
         if (!hasHit) {
 
             hasHit = true;
             rb.isKinematic = true; // Stop the arrow's movement
+
             Destroy(gameObject, 2f); // Destroy the arrow after 2 seconds, change this value as needed.
 
             // Invoke the arrow destruction event.
