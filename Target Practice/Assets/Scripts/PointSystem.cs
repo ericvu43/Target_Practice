@@ -24,6 +24,11 @@ public class PointSystem : MonoBehaviour
             pointsText.text = "Points: " + points.ToString();
         }
     }
+    /* This Method communicates to ArrowShoot to reset score after 9 arrow shots */
+    public int GetPoints()
+    {
+        return points;
+    }
 }
 
 

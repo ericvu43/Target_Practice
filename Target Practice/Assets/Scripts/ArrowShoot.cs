@@ -16,10 +16,15 @@ public class ArrowShoot : MonoBehaviour
     private float lastShotTime;
     public GameObject HandArrow;
 
-    private int arrowsShot = 0; // Keep track of the number of arrows shot
+    private int arrowsShotWind = 0; // Keep track of the number of arrows shot
+    private int arrowsShotScore = 0;
     private bool isArrowInAir = false; // Track if an arrow is in the air
 
     private WindManager windManager; // Reference to the WindManager script
+
+    public GameObject playerObject; // This is a public field to assign a player GameObject
+
+    public PointSystem pointSystem; // Reference to the PointSystem script
 
 
     private void Start()
@@ -27,7 +32,7 @@ public class ArrowShoot : MonoBehaviour
         mainCamera = Camera.main;
         HandArrow.gameObject.SetActive(false);
 
-        
+        pointSystem = FindObjectOfType<PointSystem>();
 
         // Find the WindManager script in the scene
         windManager = FindObjectOfType<WindManager>();
@@ -35,6 +40,10 @@ public class ArrowShoot : MonoBehaviour
 
     private void Update()
     {
+        /* First Arrow shoots fine but I couldnt find the reason why after the first arrow shoots two arrows
+         however the score doesnt increase even if the second arrow hits the target because there is a 
+         cooldown on when a player can score. This second arrow can be seen as a "scouting" arrow to see where
+         the wind will do next shot */
         if (Input.GetButton("Fire1") && canShoot)
         {
             isAiming = true;
@@ -49,31 +58,44 @@ public class ArrowShoot : MonoBehaviour
             // Shoot an arrow and activate the cooldown
             shoot();
             canShoot = false;
-            arrowsShot++;
+            arrowsShotWind++;
+            arrowsShotScore++;
             isAiming = false;
-            Debug.Log(arrowsShot);
 
 
             // Check if the player has shot three arrows, and update wind
-            if (arrowsShot >= 3)
+            if (arrowsShotWind >= 3)
             {
-                arrowsShot = 0;
                 windManager.UpdateWind(); // Call a method to update the wind parameters
-
-                Vector3 newPosition = transform.position;
-                newPosition.x = -23f; // Set the desired x position
-                transform.position = newPosition;
-                Debug.Log("Moving back");
+                arrowsShotWind = 0;
+                Vector3 temp = new Vector3(200.0f, 0, 0);
+                playerObject.transform.position += temp;
 
             }
-            // You can also visualize the aim direction with a line renderer or other methods.
+            if (arrowsShotScore >= 9) // Check if nine arrows have been shot
+            {
+                // Reset score and arrows shot count
+                arrowsShotScore = 0;
+                pointSystem.AddPoints(-pointSystem.GetPoints()); // Reset the points to zero
+            }
         }
+
 
         // Removed the StartCoroutine for CooldownTimer(), as it's not needed
         // Check for cooldown completion
         if (!canShoot && Time.time - lastShotTime >= cooldownTime)
         {
             canShoot = true; // The cooldown is over, allowing the player to shoot again.
+        }
+        /* Made it so that if esc is pressed in game scene the game would just close instead of going 
+         to Main menu scene */
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #else
+                Application.Quit();
+            #endif
         }
     }
 
